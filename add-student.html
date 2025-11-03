@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Student Management System</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="add-student.html" class="active">Add Student</a></li>
+                    <li><a href="view-students.html">View Students</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Add New Student</h2>
+                <form id="addStudentForm" method="POST" action="AddStudentServlet">
+                    <div class="form-group">
+                        <label for="rollNumber">Roll Number:</label>
+                        <input type="text" id="rollNumber" name="rollNumber" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course">Course:</label>
+                        <select id="course" name="course" required>
+                            <option value="">Select Course</option>
+                            <option value="CS">Computer Science</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">Electronics</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gpa">GPA:</label>
+                        <input type="number" id="gpa" name="gpa" step="0.1" min="0" max="4" required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Add Student</button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Student Management System.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
