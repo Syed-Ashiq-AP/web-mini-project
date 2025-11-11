@@ -6,7 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import org.json.JSONObject;
 
-public class AddStudentServlet extends HttpServlet {
+public class AddPatientServlet extends HttpServlet {
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -15,21 +15,21 @@ public class AddStudentServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         try {
-            String rollNumber = request.getParameter("rollNumber");
+            String patientId = request.getParameter("patientId");
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
-            String course = request.getParameter("course");
-            String gpa = request.getParameter("gpa");
+            String status = request.getParameter("status");
+            String temperature = request.getParameter("temperature");
             
-            if (rollNumber == null || rollNumber.trim().isEmpty() ||
+            if (patientId == null || patientId.trim().isEmpty() ||
                 firstName == null || firstName.trim().isEmpty() ||
                 lastName == null || lastName.trim().isEmpty() ||
                 email == null || email.trim().isEmpty() ||
                 phone == null || phone.trim().isEmpty() ||
-                course == null || course.trim().isEmpty() ||
-                gpa == null || gpa.trim().isEmpty()) {
+                status == null || status.trim().isEmpty() ||
+                temperature == null || temperature.trim().isEmpty()) {
                 
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 out.println(new JSONObject().put("success", false).put("message", "All fields required").toString());
@@ -39,16 +39,16 @@ public class AddStudentServlet extends HttpServlet {
             Connection conn = DatabaseUtil.getConnection();
             if (conn == null) throw new Exception("DB connection failed");
             
-            String sql = "INSERT INTO students (roll_number, first_name, last_name, email, phone, course, gpa) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO patients (patient_id, first_name, last_name, email, phone, status, temperature) VALUES (?, ?, ?, ?, ?, ?, ?)";
             
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, rollNumber);
+            stmt.setString(1, patientId);
             stmt.setString(2, firstName);
             stmt.setString(3, lastName);
             stmt.setString(4, email);
             stmt.setString(5, phone);
-            stmt.setString(6, course);
-            stmt.setDouble(7, Double.parseDouble(gpa));
+            stmt.setString(6, status);
+            stmt.setDouble(7, Double.parseDouble(temperature));
             
             int result = stmt.executeUpdate();
             stmt.close();
@@ -56,7 +56,7 @@ public class AddStudentServlet extends HttpServlet {
             
             if (result > 0) {
                 response.setStatus(HttpServletResponse.SC_OK);
-                out.println(new JSONObject().put("success", true).put("message", "Student added").toString());
+                out.println(new JSONObject().put("success", true).put("message", "Patient added").toString());
             } else {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 out.println(new JSONObject().put("success", false).put("message", "Failed to add").toString());

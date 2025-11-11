@@ -5,8 +5,8 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <display-name>Student Management System</display-name>
-    <description>A simple student management system using Servlets, JSP, and MySQL</description>
+    <display-name>COVID-19 Data Tracker</display-name>
+    <description>A simple COVID-19 patient data tracker using Servlets and MySQL</description>
 
     <!-- Session Configuration -->
     <session-config>
@@ -20,24 +20,24 @@
 
     <!-- Servlet Declarations -->
     <servlet>
-        <servlet-name>AddStudentServlet</servlet-name>
-        <servlet-class>servlets.AddStudentServlet</servlet-class>
+        <servlet-name>AddPatientServlet</servlet-name>
+        <servlet-class>servlets.AddPatientServlet</servlet-class>
     </servlet>
     
     <servlet>
-        <servlet-name>ViewStudentsServlet</servlet-name>
-        <servlet-class>servlets.ViewStudentsServlet</servlet-class>
+        <servlet-name>ViewPatientsServlet</servlet-name>
+        <servlet-class>servlets.ViewPatientsServlet</servlet-class>
     </servlet>
 
     <!-- Servlet Mappings -->
     <servlet-mapping>
-        <servlet-name>AddStudentServlet</servlet-name>
-        <url-pattern>/AddStudentServlet</url-pattern>
+        <servlet-name>AddPatientServlet</servlet-name>
+        <url-pattern>/AddPatientServlet</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
-        <servlet-name>ViewStudentsServlet</servlet-name>
-        <url-pattern>/ViewStudentsServlet</url-pattern>
+        <servlet-name>ViewPatientsServlet</servlet-name>
+        <url-pattern>/ViewPatientsServlet</url-pattern>
     </servlet-mapping>
 
     <!-- Welcome Files -->

@@ -7,7 +7,7 @@ import javax.servlet.http.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ViewStudentsServlet extends HttpServlet {
+public class ViewPatientsServlet extends HttpServlet {
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -21,11 +21,11 @@ public class ViewStudentsServlet extends HttpServlet {
             Connection conn = DatabaseUtil.getConnection();
             if (conn == null) throw new Exception("DB connection failed");
             
-            String sql = "SELECT * FROM students";
+            String sql = "SELECT * FROM patients";
             if (search != null && !search.trim().isEmpty()) {
-                sql += " WHERE first_name LIKE ? OR last_name LIKE ? OR roll_number LIKE ? OR course LIKE ?";
+                sql += " WHERE first_name LIKE ? OR last_name LIKE ? OR patient_id LIKE ? OR status LIKE ?";
             }
-            sql += " ORDER BY roll_number";
+            sql += " ORDER BY patient_id";
             
             PreparedStatement stmt = conn.prepareStatement(sql);
             
@@ -38,18 +38,18 @@ public class ViewStudentsServlet extends HttpServlet {
             }
             
             ResultSet rs = stmt.executeQuery();
-            JSONArray students = new JSONArray();
+            JSONArray patients = new JSONArray();
             
             while (rs.next()) {
-                JSONObject student = new JSONObject();
-                student.put("rollNumber", rs.getString("roll_number"));
-                student.put("firstName", rs.getString("first_name"));
-                student.put("lastName", rs.getString("last_name"));
-                student.put("email", rs.getString("email"));
-                student.put("phone", rs.getString("phone"));
-                student.put("course", rs.getString("course"));
-                student.put("gpa", rs.getDouble("gpa"));
-                students.put(student);
+                JSONObject patient = new JSONObject();
+                patient.put("patientId", rs.getString("patient_id"));
+                patient.put("firstName", rs.getString("first_name"));
+                patient.put("lastName", rs.getString("last_name"));
+                patient.put("email", rs.getString("email"));
+                patient.put("phone", rs.getString("phone"));
+                patient.put("status", rs.getString("status"));
+                patient.put("temperature", rs.getDouble("temperature"));
+                patients.put(patient);
             }
             
             rs.close();
@@ -57,12 +57,12 @@ public class ViewStudentsServlet extends HttpServlet {
             conn.close();
             
             JSONObject response_obj = new JSONObject();
-            response_obj.put("students", students);
+            response_obj.put("patients", patients);
             out.println(response_obj.toString());
             
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            out.println(new JSONObject().put("students", new JSONArray()).toString());
+            out.println(new JSONObject().put("patients", new JSONArray()).toString());
         }
     }
 }

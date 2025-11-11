@@ -3,18 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Management System</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>COVID-19 Data Tracker</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+}
+
+main {
+    padding: 20px 0;
+}
+
+.form-section {
+    max-width: 500px;
+    margin: 0 auto 40px;
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 5px;
+}
+
+.form-section h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 1em;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 3px #667eea;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.form-actions button {
+    flex: 1;
+    max-width: 150px;
+}
+
+.patients-section {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.patients-section h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+}
+
+.btn-secondary {
+    background: #ecf0f1;
+    color: #333;
+    border: 1px solid #667eea;
+}
+
+.btn-secondary:hover {
+    background: #667eea;
+    color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+}
+
+thead {
+    background: #667eea;
+    color: white;
+}
+
+th {
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+}
+
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        max-width: 100%;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+}
+    </style>
 </head>
 <body>
     <div class="container">
         <main>
             <section class="form-section">
-                <h2>Add New Student</h2>
-                <form id="addStudentForm" method="POST" action="AddStudentServlet">
+                <h2>Add COVID-19 Case</h2>
+                <form id="addPatientForm" method="POST" action="AddPatientServlet">
                     <div class="form-group">
-                        <label for="rollNumber">Roll Number:</label>
-                        <input type="text" id="rollNumber" name="rollNumber" required>
+                        <label for="patientId">Patient ID:</label>
+                        <input type="text" id="patientId" name="patientId" required>
                     </div>
 
                     <div class="form-group">
@@ -38,29 +225,29 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="course">Course:</label>
-                        <select id="course" name="course" required>
-                            <option value="">Select Course</option>
-                            <option value="CS">Computer Science</option>
-                            <option value="IT">IT</option>
-                            <option value="ECE">Electronics</option>
+                        <label for="status">Status:</label>
+                        <select id="status" name="status" required>
+                            <option value="">Select Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Recovered">Recovered</option>
+                            <option value="Critical">Critical</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="gpa">GPA:</label>
-                        <input type="number" id="gpa" name="gpa" step="0.1" min="0" max="4" required>
+                        <label for="temperature">Temperature (°F):</label>
+                        <input type="number" id="temperature" name="temperature" step="0.1" min="95" max="110" required>
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Add Student</button>
+                        <button type="submit" class="btn btn-primary">Add Case</button>
                         <button type="reset" class="btn btn-secondary">Clear</button>
                     </div>
                 </form>
             </section>
 
-            <section class="students-section">
-                <h2>All Students</h2>
+            <section class="patients-section">
+                <h2>All COVID-19 Cases</h2>
                 <div id="tableContainer">
                     <p class="loading">Loading...</p>
                 </div>
@@ -68,7 +255,116 @@
         </main>
     </div>
 
-    <script src="script.js"></script>
-    <script src="view-students.js"></script>
+    <script>
+function showMessage(message, type = 'info') {
+    const div = document.createElement('div');
+    div.className = type + '-message';
+    div.textContent = message;
+    div.style.position = 'fixed';
+    div.style.top = '20px';
+    div.style.right = '20px';
+    div.style.zIndex = '10000';
+    div.style.minWidth = '300px';
+    document.body.appendChild(div);
+    setTimeout(() => div.remove(), 3000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('addPatientForm');
+    if (form) {
+        form.addEventListener('submit', handleAddPatient);
+    }
+    loadPatients();
+});
+
+async function handleAddPatient(e) {
+    e.preventDefault();
+
+    const data = {
+        patientId: document.getElementById('patientId').value,
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        status: document.getElementById('status').value,
+        temperature: document.getElementById('temperature').value
+    };
+
+    try {
+        const response = await fetch('/covid-tracker/AddPatientServlet', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(data)
+        });
+
+        if (response.ok) {
+            showMessage('COVID case added!', 'success');
+            document.getElementById('addPatientForm').reset();
+            loadPatients();
+        } else {
+            showMessage('Failed to add case', 'error');
+        }
+    } catch (error) {
+        showMessage('Error: ' + error.message, 'error');
+    }
+}
+
+async function loadPatients() {
+    const container = document.getElementById('tableContainer');
+    container.innerHTML = '<p class="loading">Loading...</p>';
+
+    try {
+        const response = await fetch('/covid-tracker/ViewPatientsServlet');
+        const data = await response.json();
+
+        if (data.patients && data.patients.length > 0) {
+            displayPatients(data.patients);
+        } else {
+            container.innerHTML = '<p class="loading">No COVID cases found</p>';
+        }
+    } catch (error) {
+        container.innerHTML = '<p class="loading">Error loading COVID cases</p>';
+    }
+}
+
+function displayPatients(patients) {
+    let html = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th>Temperature</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    patients.forEach(p => {
+        html += `
+            <tr>
+                <td>${escape(p.patientId)}</td>
+                <td>${escape(p.firstName)} ${escape(p.lastName)}</td>
+                <td>${escape(p.email)}</td>
+                <td>${escape(p.phone)}</td>
+                <td>${escape(p.status)}</td>
+                <td>${p.temperature}</td>
+            </tr>
+        `;
+    });
+
+    html += '</tbody></table>';
+    document.getElementById('tableContainer').innerHTML = html;
+}
+
+function escape(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+    </script>
 </body>
 </html>
