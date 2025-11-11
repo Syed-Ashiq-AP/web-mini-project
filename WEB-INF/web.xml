@@ -5,8 +5,8 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <display-name>Vehicle Service Management System</display-name>
-    <description>A comprehensive vehicle service management system using Java Servlets and MySQL</description>
+    <display-name>Inventory Management System</display-name>
+    <description>A comprehensive inventory management system using Servlets and MySQL</description>
 
     <!-- Session Configuration -->
     <session-config>
@@ -20,26 +20,24 @@
 
     <!-- Servlet Declarations -->
     <servlet>
-        <servlet-name>AddVehicleServlet</servlet-name>
-        <servlet-class>servlets.AddVehicleServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <servlet-name>AddProductServlet</servlet-name>
+        <servlet-class>servlets.AddProductServlet</servlet-class>
     </servlet>
     
     <servlet>
-        <servlet-name>ViewVehiclesServlet</servlet-name>
-        <servlet-class>servlets.ViewVehiclesServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <servlet-name>ViewProductsServlet</servlet-name>
+        <servlet-class>servlets.ViewProductsServlet</servlet-class>
     </servlet>
 
     <!-- Servlet Mappings -->
     <servlet-mapping>
-        <servlet-name>AddVehicleServlet</servlet-name>
-        <url-pattern>/AddVehicleServlet</url-pattern>
+        <servlet-name>AddProductServlet</servlet-name>
+        <url-pattern>/AddProductServlet</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
-        <servlet-name>ViewVehiclesServlet</servlet-name>
-        <url-pattern>/ViewVehiclesServlet</url-pattern>
+        <servlet-name>ViewProductsServlet</servlet-name>
+        <url-pattern>/ViewProductsServlet</url-pattern>
     </servlet-mapping>
 
     <!-- Welcome Files -->

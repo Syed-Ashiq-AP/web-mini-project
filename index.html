@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Service Management System</title>
+    <title>Inventory Management System</title>
     <style>
 * {
     margin: 0;
@@ -24,27 +24,25 @@ body {
     background: white;
     padding: 30px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
 header {
     text-align: center;
+    padding: 20px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
     margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #667eea;
 }
 
 header h1 {
-    color: #667eea;
     font-size: 2.5em;
     margin-bottom: 10px;
 }
 
 header p {
-    color: #666;
     font-size: 1.1em;
+    opacity: 0.9;
 }
 
 main {
@@ -57,7 +55,7 @@ main {
     background: #f9f9f9;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form-section h2 {
@@ -67,8 +65,18 @@ main {
     font-size: 1.8em;
 }
 
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 15px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
 }
 
 .form-group label {
@@ -85,14 +93,14 @@ main {
     border: 2px solid #ddd;
     border-radius: 5px;
     font-size: 1em;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
 }
 
 .form-actions {
@@ -107,12 +115,12 @@ main {
     max-width: 200px;
 }
 
-.vehicles-section {
-    max-width: 1100px;
+.products-section {
+    max-width: 100%;
     margin: 0 auto;
 }
 
-.vehicles-section h2 {
+.products-section h2 {
     color: #667eea;
     margin-bottom: 25px;
     text-align: center;
@@ -120,9 +128,9 @@ main {
 }
 
 .btn {
-    padding: 12px 24px;
+    padding: 12px 30px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 1em;
     font-weight: 600;
     cursor: pointer;
@@ -132,19 +140,18 @@ main {
 }
 
 .btn-primary {
-    background: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
 }
 
 .btn-primary:hover {
-    background: #5568d3;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
 
 .btn-secondary {
-    background: #ecf0f1;
-    color: #333;
+    background: white;
+    color: #667eea;
     border: 2px solid #667eea;
 }
 
@@ -158,9 +165,9 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     background: white;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 thead {
@@ -172,9 +179,7 @@ th {
     padding: 15px;
     text-align: left;
     font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    letter-spacing: 0.5px;
+    font-size: 0.95em;
 }
 
 td {
@@ -184,37 +189,72 @@ td {
 
 tbody tr:hover {
     background: #f5f7ff;
-    transition: background 0.3s ease;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-in-stock {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-low-stock {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-out-of-stock {
+    background: #f8d7da;
+    color: #721c24;
 }
 
 .loading {
     text-align: center;
-    padding: 30px;
+    padding: 40px;
     color: #666;
     font-size: 1.1em;
+}
+
+.message {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-weight: 500;
 }
 
 .success-message {
     background: #d4edda;
     color: #155724;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    border-left: 4px solid #28a745;
+    border: 1px solid #c3e6cb;
 }
 
 .error-message {
     background: #f8d7da;
     color: #721c24;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    border-left: 4px solid #dc3545;
+    border: 1px solid #f5c6cb;
 }
 
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
     }
 
     .form-actions {
@@ -226,11 +266,11 @@ tbody tr:hover {
     }
 
     table {
-        font-size: 0.9em;
+        font-size: 0.85em;
     }
 
     th, td {
-        padding: 8px;
+        padding: 10px 8px;
     }
 }
     </style>
@@ -238,189 +278,197 @@ tbody tr:hover {
 <body>
     <div class="container">
         <header>
-            <h1>Vehicle Service Management System</h1>
-            <p>Manage your vehicle service records efficiently</p>
+            <h1>📦 Inventory Management System</h1>
+            <p>Manage your products efficiently</p>
         </header>
-        
+
         <main>
             <section class="form-section">
-                <h2>Add Vehicle Service Record</h2>
-                <form id="addVehicleForm" method="POST" action="AddVehicleServlet">
-                    <div class="form-group">
-                        <label for="vehicleId">Vehicle ID:</label>
-                        <input type="text" id="vehicleId" name="vehicleId" required placeholder="e.g., VEH001">
-                    </div>
+                <h2>Add New Product</h2>
+                <form id="addProductForm" method="POST" action="AddProductServlet">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="productId">Product ID:</label>
+                            <input type="text" id="productId" name="productId" placeholder="e.g., P001" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="ownerName">Owner Name:</label>
-                        <input type="text" id="ownerName" name="ownerName" required placeholder="Enter owner's full name">
-                    </div>
+                        <div class="form-group">
+                            <label for="productName">Product Name:</label>
+                            <input type="text" id="productName" name="productName" placeholder="e.g., Laptop" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="vehicleModel">Vehicle Model:</label>
-                        <input type="text" id="vehicleModel" name="vehicleModel" required placeholder="e.g., Toyota Camry 2020">
-                    </div>
+                        <div class="form-group">
+                            <label for="category">Category:</label>
+                            <select id="category" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Food">Food</option>
+                                <option value="Books">Books</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="registrationNumber">Registration Number:</label>
-                        <input type="text" id="registrationNumber" name="registrationNumber" required placeholder="e.g., ABC-1234">
-                    </div>
+                        <div class="form-group">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" id="quantity" name="quantity" min="0" placeholder="e.g., 100" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="contactNumber">Contact Number:</label>
-                        <input type="tel" id="contactNumber" name="contactNumber" required placeholder="e.g., +1234567890">
-                    </div>
+                        <div class="form-group">
+                            <label for="price">Price ($):</label>
+                            <input type="number" id="price" name="price" step="0.01" min="0" placeholder="e.g., 999.99" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required placeholder="owner@example.com">
-                    </div>
+                        <div class="form-group">
+                            <label for="supplier">Supplier:</label>
+                            <input type="text" id="supplier" name="supplier" placeholder="e.g., ABC Suppliers" required>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="serviceType">Service Type:</label>
-                        <select id="serviceType" name="serviceType" required>
-                            <option value="">Select Service Type</option>
-                            <option value="Oil Change">Oil Change</option>
-                            <option value="Brake Service">Brake Service</option>
-                            <option value="Tire Rotation">Tire Rotation</option>
-                            <option value="Engine Repair">Engine Repair</option>
-                            <option value="Transmission Service">Transmission Service</option>
-                            <option value="General Inspection">General Inspection</option>
-                            <option value="AC Service">AC Service</option>
-                            <option value="Battery Replacement">Battery Replacement</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="mileage">Current Mileage (km):</label>
-                        <input type="number" id="mileage" name="mileage" min="0" max="999999" required placeholder="e.g., 50000">
+                        <div class="form-group full-width">
+                            <label for="status">Status:</label>
+                            <select id="status" name="status" required>
+                                <option value="">Select Status</option>
+                                <option value="In Stock">In Stock</option>
+                                <option value="Low Stock">Low Stock</option>
+                                <option value="Out of Stock">Out of Stock</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Add Service Record</button>
+                        <button type="submit" class="btn btn-primary">Add Product</button>
                         <button type="reset" class="btn btn-secondary">Clear Form</button>
                     </div>
                 </form>
             </section>
 
-            <section class="vehicles-section">
-                <h2>All Vehicle Service Records</h2>
+            <section class="products-section">
+                <h2>Product Inventory</h2>
                 <div id="tableContainer">
-                    <p class="loading">Loading vehicle records...</p>
+                    <p class="loading">Loading products...</p>
                 </div>
             </section>
         </main>
     </div>
 
     <script>
-const API_BASE_URL = '/vehicle-service';
-
+/**
+ * Display a notification message to the user
+ */
 function showMessage(message, type = 'info') {
     const div = document.createElement('div');
-    div.className = type + '-message';
+    div.className = type + '-message message';
     div.textContent = message;
     div.style.position = 'fixed';
     div.style.top = '20px';
     div.style.right = '20px';
     div.style.zIndex = '10000';
-    div.style.minWidth = '350px';
-    div.style.padding = '15px';
-    div.style.borderRadius = '5px';
-    div.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+    div.style.minWidth = '300px';
+    div.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
     document.body.appendChild(div);
     setTimeout(() => div.remove(), 4000);
 }
 
+/**
+ * Initialize the application when DOM is loaded
+ */
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('addVehicleForm');
+    const form = document.getElementById('addProductForm');
     if (form) {
-        form.addEventListener('submit', handleAddVehicle);
+        form.addEventListener('submit', handleAddProduct);
     }
-    loadVehicles();
+    loadProducts();
 });
 
-async function handleAddVehicle(e) {
+/**
+ * Handle form submission for adding a new product
+ */
+async function handleAddProduct(e) {
     e.preventDefault();
 
     const formData = {
-        vehicleId: document.getElementById('vehicleId').value.trim(),
-        ownerName: document.getElementById('ownerName').value.trim(),
-        vehicleModel: document.getElementById('vehicleModel').value.trim(),
-        registrationNumber: document.getElementById('registrationNumber').value.trim(),
-        contactNumber: document.getElementById('contactNumber').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        serviceType: document.getElementById('serviceType').value,
-        mileage: document.getElementById('mileage').value
+        productId: document.getElementById('productId').value.trim(),
+        productName: document.getElementById('productName').value.trim(),
+        category: document.getElementById('category').value,
+        quantity: document.getElementById('quantity').value,
+        price: document.getElementById('price').value,
+        supplier: document.getElementById('supplier').value.trim(),
+        status: document.getElementById('status').value
     };
 
     try {
-        const response = await fetch(`${API_BASE_URL}/AddVehicleServlet`, {
+        const response = await fetch('/inventory/AddProductServlet', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams(formData)
         });
 
         if (response.ok) {
-            showMessage('Vehicle service record added successfully!', 'success');
-            document.getElementById('addVehicleForm').reset();
-            loadVehicles();
+            showMessage('Product added successfully!', 'success');
+            document.getElementById('addProductForm').reset();
+            loadProducts();
         } else {
-            const errorData = await response.json();
-            showMessage(errorData.message || 'Failed to add service record', 'error');
+            const errorText = await response.text();
+            showMessage('Failed to add product: ' + errorText, 'error');
         }
     } catch (error) {
         showMessage('Error: ' + error.message, 'error');
     }
 }
 
-async function loadVehicles() {
+/**
+ * Load and display all products from the server
+ */
+async function loadProducts() {
     const container = document.getElementById('tableContainer');
-    container.innerHTML = '<p class="loading">Loading vehicle records...</p>';
+    container.innerHTML = '<p class="loading">Loading products...</p>';
 
     try {
-        const response = await fetch(`${API_BASE_URL}/ViewVehiclesServlet`);
+        const response = await fetch('/inventory/ViewProductsServlet');
         const data = await response.json();
 
-        if (data.vehicles && data.vehicles.length > 0) {
-            displayVehicles(data.vehicles);
+        if (data.products && data.products.length > 0) {
+            displayProducts(data.products);
         } else {
-            container.innerHTML = '<p class="loading">No vehicle service records found</p>';
+            container.innerHTML = '<p class="loading">No products found in inventory</p>';
         }
     } catch (error) {
-        container.innerHTML = '<p class="loading">Error loading vehicle records</p>';
-        console.error('Error:', error);
+        container.innerHTML = '<p class="loading">Error loading products: ' + error.message + '</p>';
     }
 }
 
-function displayVehicles(vehicles) {
+/**
+ * Render products table
+ */
+function displayProducts(products) {
     let html = `
         <table>
             <thead>
                 <tr>
-                    <th>Vehicle ID</th>
-                    <th>Owner Name</th>
-                    <th>Model</th>
-                    <th>Registration</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Service Type</th>
-                    <th>Mileage (km)</th>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Price ($)</th>
+                    <th>Supplier</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
     `;
 
-    vehicles.forEach(vehicle => {
+    products.forEach(p => {
+        const statusClass = p.status.toLowerCase().replace(/ /g, '-');
         html += `
             <tr>
-                <td>${escapeHtml(vehicle.vehicleId)}</td>
-                <td>${escapeHtml(vehicle.ownerName)}</td>
-                <td>${escapeHtml(vehicle.vehicleModel)}</td>
-                <td>${escapeHtml(vehicle.registrationNumber)}</td>
-                <td>${escapeHtml(vehicle.contactNumber)}</td>
-                <td>${escapeHtml(vehicle.email)}</td>
-                <td>${escapeHtml(vehicle.serviceType)}</td>
-                <td>${vehicle.mileage}</td>
+                <td>${escapeHtml(p.productId)}</td>
+                <td>${escapeHtml(p.productName)}</td>
+                <td>${escapeHtml(p.category)}</td>
+                <td>${p.quantity}</td>
+                <td>$${parseFloat(p.price).toFixed(2)}</td>
+                <td>${escapeHtml(p.supplier)}</td>
+                <td><span class="status-badge status-${statusClass}">${escapeHtml(p.status)}</span></td>
             </tr>
         `;
     });
@@ -429,9 +477,12 @@ function displayVehicles(vehicles) {
     document.getElementById('tableContainer').innerHTML = html;
 }
 
-function escapeHtml(text) {
+/**
+ * Escape HTML to prevent XSS attacks
+ */
+function escapeHtml(str) {
     const div = document.createElement('div');
-    div.textContent = text;
+    div.textContent = str;
     return div.innerHTML;
 }
     </script>
